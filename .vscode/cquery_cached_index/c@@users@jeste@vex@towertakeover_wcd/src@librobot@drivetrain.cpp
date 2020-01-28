@@ -3,19 +3,19 @@
 using namespace okapi;
 
 const auto WHEEL_DIAMETER = 4_in;
-const auto CHASSIS_WIDTH = 15_in;
+const auto CHASSIS_WIDTH = 11_in;
 
 namespace drivetrain {
 
 	Motor driveFL(DRIVE_FL);
-	Motor driveML(DRIVE_ML);
+	// Motor driveML(DRIVE_ML);
 	Motor driveRL(DRIVE_RL);
 	Motor driveFR(DRIVE_FR);
-	Motor driveMR(DRIVE_MR);
+	// Motor driveMR(DRIVE_MR);
 	Motor driveRR(DRIVE_RR);
 
-	MotorGroup driveLeft({driveFL, driveML, driveRL});
-	MotorGroup driveRight({driveFR, driveMR, driveRR});
+	MotorGroup driveLeft({driveFL, /*driveML,*/ driveRL});
+	MotorGroup driveRight({driveFR, /*driveMR,*/ driveRR});
 
 	auto drive = ChassisControllerBuilder()
 		.withMotors(driveLeft, driveRight)
@@ -45,4 +45,28 @@ namespace drivetrain {
 	void tankDrive(double left, double right) {
 		drive->getModel()->tank(left, right);
 	}
+
+	/**
+	 * declarations so auton code can be used elsewhere
+	 */
+	void driveAsync(QLength distance) {
+		drive->moveDistanceAsync(distance);
+	}
+
+	void driveSync(QLength distance) {
+		drive->moveDistance(distance);
+	}
+
+	void turnAsync(QAngle angle) {
+		drive->turnAngleAsync(angle);
+	}
+
+	void turnSync(QAngle angle) {
+		drive->turnAngle(angle);
+	}
+
+	void waitUntilFinished() {
+		drive->waitUntilSettled();
+	}
+
 }

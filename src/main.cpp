@@ -1,6 +1,7 @@
 #include "main.h"
 #include "librobot/drivetrain.hpp"
 #include "librobot/intake.hpp"
+#include "librobot/auton.hpp"
 
 using namespace okapi;
 
@@ -28,8 +29,11 @@ void on_center_button() {
  */
 void initialize() {
 	pros::lcd::initialize();
+
 	drivetrain::init();
 	intake::init();
+
+	auton::init();
 
 	pros::lcd::set_text(1, "Hello PROS User!");
 	pros::lcd::register_btn1_cb(on_center_button);
@@ -64,7 +68,9 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	auton::autonLeft();
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -104,9 +110,9 @@ void opcontrol() {
 	while(true) {
 
 		// arcade drive controls
-		throttle = master.getAnalog(okapi::ControllerAnalog::rightX);
-		rotation = master.getAnalog(okapi::ControllerAnalog::leftY);
-		drivetrain::arcadeDrive(-throttle, rotation);
+		throttle = master.getAnalog(okapi::ControllerAnalog::leftY);
+		rotation = master.getAnalog(okapi::ControllerAnalog::rightX);
+		drivetrain::arcadeDrive(throttle, rotation);
 
 		// tank drive controls
 		// left = master.getAnalog(okapi::ControllerAnalog::leftY);

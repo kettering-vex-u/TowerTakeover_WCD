@@ -5,9 +5,9 @@
 using namespace okapi;
 
 void autoLeft() {
-    drive->moveDistanceAsync(10_in);
+    drivetrain::driveAsync(10_in);
     intake::intakeIn(12000);
-    drive->waitUntilSettled();
-    drive->turnAngle(90_deg);
-    drive->moveDistance(10_in);
+    drivetrain::waitUntilFinished();
+    drivetrain::turnSync(90_deg);
+    drivetrain::driveSync(15_in);
 }
