@@ -7,10 +7,18 @@ const auto CHASSIS_WIDTH = 11_in;
 
 namespace drivetrain {
 
-	Motor driveFL(DRIVE_FL);
-	Motor driveRL(DRIVE_RL);
-	Motor driveFR(DRIVE_FR);
-	Motor driveRR(DRIVE_RR);
+	Motor driveFL(DRIVE_FL, false,
+				  AbstractMotor::gearset::green,
+				  AbstractMotor::encoderUnits::rotations);
+	Motor driveRL(DRIVE_RL, false,
+				  AbstractMotor::gearset::green,
+				  AbstractMotor::encoderUnits::rotations);
+	Motor driveFR(DRIVE_FR, true,
+				  AbstractMotor::gearset::green,
+				  AbstractMotor::encoderUnits::rotations);
+	Motor driveRR(DRIVE_RR, true,
+				  AbstractMotor::gearset::green,
+				  AbstractMotor::encoderUnits::rotations);
 
 	MotorGroup driveLeft({driveFL, driveRL});
 	MotorGroup driveRight({driveFR, driveRR});
