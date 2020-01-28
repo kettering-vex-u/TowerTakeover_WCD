@@ -86,8 +86,8 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	// pros::Controller master(pros::E_CONTROLLER_MASTER);
-	okapi::Controller master(master);
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	// okapi::Controller master(master);
 
 	// initalizing all buttons
 	okapi::ControllerButton buttonA(okapi::ControllerDigital::A);
@@ -110,8 +110,10 @@ void opcontrol() {
 	while(true) {
 
 		// arcade drive controls
-		throttle = master.getAnalog(okapi::ControllerAnalog::leftY);
-		rotation = master.getAnalog(okapi::ControllerAnalog::rightX);
+		// throttle = master.getAnalog(okapi::ControllerAnalog::leftY);
+		// rotation = master.getAnalog(okapi::ControllerAnalog::rightX);
+		throttle = master.get_analog(ANALOG_LEFT_Y);
+		rotation = master.get_analog(ANALOG_RIGHT_X);
 		drivetrain::arcadeDrive(throttle, rotation);
 
 		// tank drive controls

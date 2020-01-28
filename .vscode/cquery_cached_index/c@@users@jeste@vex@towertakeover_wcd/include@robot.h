@@ -3,12 +3,10 @@
 #define _ROBOT_H_
 
 // defining drive Motors
-#define DRIVE_FL 2
-// #define DRIVE_ML 2
+#define DRIVE_FL 1
 #define DRIVE_RL 3
-#define DRIVE_FR 12
-// #define DRIVE_MR 12
-#define DRIVE_RR 13
+#define DRIVE_FR 8
+#define DRIVE_RR 9
 
 // defining intake Motors
 #define INTAKE_L 5

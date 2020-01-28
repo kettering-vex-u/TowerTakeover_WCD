@@ -23,8 +23,8 @@ enum class ControllerId {
  */
 enum class ControllerAnalog {
   leftX = 0,  ///< leftX
-  leftY = 2,  ///< leftY
-  rightX = 1, ///< rightX
+  leftY = 1,  ///< leftY
+  rightX = 2, ///< rightX
   rightY = 3  ///< rightY
 };
 

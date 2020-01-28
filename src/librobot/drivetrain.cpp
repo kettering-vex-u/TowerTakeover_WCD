@@ -8,14 +8,12 @@ const auto CHASSIS_WIDTH = 11_in;
 namespace drivetrain {
 
 	Motor driveFL(DRIVE_FL);
-	// Motor driveML(DRIVE_ML);
 	Motor driveRL(DRIVE_RL);
 	Motor driveFR(DRIVE_FR);
-	// Motor driveMR(DRIVE_MR);
 	Motor driveRR(DRIVE_RR);
 
-	MotorGroup driveLeft({driveFL, /*driveML,*/ driveRL});
-	MotorGroup driveRight({driveFR, /*driveMR,*/ driveRR});
+	MotorGroup driveLeft({driveFL, driveRL});
+	MotorGroup driveRight({driveFR, driveRR});
 
 	auto drive = ChassisControllerBuilder()
 		.withMotors(driveLeft, driveRight)
