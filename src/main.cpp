@@ -110,8 +110,6 @@ void opcontrol() {
 	while(true) {
 
 		// arcade drive controls
-		// throttle = master.getAnalog(okapi::ControllerAnalog::leftY);
-		// rotation = master.getAnalog(okapi::ControllerAnalog::rightX);
 		throttle = master.get_analog(ANALOG_LEFT_Y);
 		rotation = master.get_analog(ANALOG_RIGHT_X);
 		drivetrain::arcadeDrive(throttle, rotation);
