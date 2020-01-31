@@ -2,6 +2,8 @@
 #include "librobot/drivetrain.hpp"
 #include "librobot/intake.hpp"
 #include "librobot/auton.hpp"
+#include "librobot/wrist.hpp"
+#include "librobot/pusher.hpp"
 
 using namespace okapi;
 
@@ -86,48 +88,47 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	// okapi::Controller master(master);
+	Controller master(master);
 
 	// initalizing all buttons
-	okapi::ControllerButton buttonA(okapi::ControllerDigital::A);
-	okapi::ControllerButton buttonB(okapi::ControllerDigital::B);
-	okapi::ControllerButton buttonX(okapi::ControllerDigital::X);
-	okapi::ControllerButton buttonY(okapi::ControllerDigital::Y);
-	// okapi::ControllerButton buttonLB(E_CONTROLLER_DIGITAL_L1);
-	// okapi::ControllerButton buttonLT(E_CONTROLLER_DIGITAL_L2);
-	// okapi::ControllerButton buttonRB(E_CONTROLLER_DIGITAL_R1);
-	// okapi::ControllerButton buttonRT(E_CONTROLLER_DIGITAL_R2);
-
-	// arcade drive variables
-	double throttle;
-	double rotation;
-
-	// tank drive variables
-	// double left;
-	// double right;
+	ControllerButton buttonA(ControllerDigital::A);
+	ControllerButton buttonB(ControllerDigital::B);
+	ControllerButton buttonX(ControllerDigital::X);
+	ControllerButton buttonY(ControllerDigital::Y);
+	ControllerButton buttonLB(ControllerDigital::L1);
+	ControllerButton buttonLT(ControllerDigital::L2);
+	ControllerButton buttonRB(ControllerDigital::R1);
+	ControllerButton buttonRT(ControllerDigital::R2);
 
 	while(true) {
 
 		// arcade drive controls
-		throttle = master.get_analog(ANALOG_LEFT_Y);
-		rotation = master.get_analog(ANALOG_RIGHT_X);
-		drivetrain::arcadeDrive(throttle, rotation);
+		// drivetrain::arcadeDrive(master.getAnalog(ControllerAnalog::leftY),
+		// 						master.getAnalog(ControllerAnalog::rightX));
 
 		// tank drive controls
-		// left = master.getAnalog(okapi::ControllerAnalog::leftY);
-		// right = master.getAnalog(okapi::ControllerAnalog::rightY);
-		// drive::tankDrive(left, right);
+		drivetrain::tankDrive(master.getAnalog(ControllerAnalog::leftY),
+						 	  master.getAnalog(ControllerAnalog::rightY));
 
 		// controls
-		if(buttonA.isPressed()) {
+		if(buttonLB.isPressed()) {
 			intake::intakeIn(12000);
 		}
-		else if(buttonB.isPressed()) {
+		else if(buttonRB.isPressed()) {
 			intake::intakeOut(12000);
 		}
 		else {
 			intake::stopIntake();
+		}
+
+		if(buttonA.isPressed()) {
+			wrist::wristUp(12000);
+		}
+		else if(buttonB.isPressed()) {
+			wrist::wristDown(12000);
+		}
+		else {
+			wrist::stopWrist();
 		}
 
 		// wait and give unnecessary time to other tasks

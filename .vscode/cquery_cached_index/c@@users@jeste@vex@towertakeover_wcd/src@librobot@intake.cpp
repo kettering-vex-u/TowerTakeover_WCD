@@ -7,9 +7,7 @@ namespace intake {
     Motor intakeL(INTAKE_L);
     Motor intakeR(INTAKE_R);
 
-    void init() {
-
-    }
+    void init() {}
 
     void intakeIn(double power) {
         intakeL.moveVoltage(power);
@@ -18,7 +16,7 @@ namespace intake {
 
     void intakeOut(double power) {
         intakeL.moveVoltage(-power);
-        intakeR.moveVoltage(-power);
+        intakeR.moveVoltage(power);
     }
 
     void stopIntake() {

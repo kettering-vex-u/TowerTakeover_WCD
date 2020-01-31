@@ -3,25 +3,14 @@
 using namespace okapi;
 
 const auto WHEEL_DIAMETER = 4_in;
-const auto CHASSIS_WIDTH = 11_in;
+const auto CHASSIS_WIDTH = 14_in;
 
 namespace drivetrain {
 
-	Motor driveFL(DRIVE_FL, false,
-				  AbstractMotor::gearset::green,
-				  AbstractMotor::encoderUnits::rotations);
-	Motor driveRL(DRIVE_RL, false,
-				  AbstractMotor::gearset::green,
-				  AbstractMotor::encoderUnits::rotations);
-	Motor driveFR(DRIVE_FR, true,
-				  AbstractMotor::gearset::green,
-				  AbstractMotor::encoderUnits::rotations);
-	Motor driveRR(DRIVE_RR, true,
-				  AbstractMotor::gearset::green,
-				  AbstractMotor::encoderUnits::rotations);
-
-	MotorGroup driveLeft({driveFL, driveRL});
-	MotorGroup driveRight({driveFR, driveRR});
+	Motor driveLeft(DRIVE_L, false, AbstractMotor::gearset::green,
+		 			AbstractMotor::encoderUnits::degrees);
+	Motor driveRight(DRIVE_R, true, AbstractMotor::gearset::green,
+		 			 AbstractMotor::encoderUnits::degrees);
 
 	auto drive = ChassisControllerBuilder()
 		.withMotors(driveLeft, driveRight)
@@ -32,16 +21,15 @@ namespace drivetrain {
 		.withOdometry()
 		.buildOdometry();
 
-	void init() {
-
-	}
+	void init() {}
 
 	/** arcade drive control:
 	 *  left joystick controls throttle,
 	 *  right joystick controls rotation
 	 */
 	void arcadeDrive(double throttle, double rotation) {
-		drive->getModel()->arcade(throttle, rotation);
+		drive->setMaxVelocity(200);
+		drive->getModel()->arcade(pow(throttle, 3), pow(rotation, 3));
 	}
 
 	/** tank drive control:
@@ -49,30 +37,38 @@ namespace drivetrain {
 	 *  right joystick controls right side
 	 */
 	void tankDrive(double left, double right) {
-		drive->getModel()->tank(left, right);
+		drive->getModel()->tank(pow(left, 3), pow(right, 3));
 	}
 
 	/**
 	 * declarations so auton code can be used elsewhere
 	 */
 	void driveAsync(QLength distance) {
+		drive->setMaxVelocity(150);
 		drive->moveDistanceAsync(distance);
 	}
 
 	void driveSync(QLength distance) {
+		drive->setMaxVelocity(150);
 		drive->moveDistance(distance);
 	}
 
 	void turnAsync(QAngle angle) {
+		drive->setMaxVelocity(150);
 		drive->turnAngleAsync(angle);
 	}
 
 	void turnSync(QAngle angle) {
+		drive->setMaxVelocity(150);
 		drive->turnAngle(angle);
 	}
 
 	void waitUntilFinished() {
 		drive->waitUntilSettled();
+	}
+
+	void stopDrive() {
+		drive->stop();
 	}
 
 }

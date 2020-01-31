@@ -4,10 +4,9 @@
 #include "main.h"
 
 namespace auton {
-
     void init();
     void autonLeft();
-    
+    void autonRight();
 }
 
 #endif

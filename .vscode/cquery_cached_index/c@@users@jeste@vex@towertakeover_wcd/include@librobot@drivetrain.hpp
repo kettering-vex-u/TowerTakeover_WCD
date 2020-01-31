@@ -17,6 +17,7 @@ namespace drivetrain {
     void turnSync(QAngle angle);
 
     void waitUntilFinished();
+    void stopDrive();
 }
 
 #endif
