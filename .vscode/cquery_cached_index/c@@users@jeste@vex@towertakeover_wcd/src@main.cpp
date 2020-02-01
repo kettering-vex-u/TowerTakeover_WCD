@@ -7,6 +7,13 @@
 
 using namespace okapi;
 
+const int numHeights = 4;
+const int heightOne = 20;
+const int heightTwo = 40;
+const int heightThree = 60;
+const int heightFour = 80;
+const int height[numHeights] = {heightOne, heightTwo, heightThree, heightFour};
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -34,6 +41,8 @@ void initialize() {
 
 	drivetrain::init();
 	intake::init();
+	wrist::init();
+	pusher::init();
 
 	auton::init();
 
@@ -100,6 +109,8 @@ void opcontrol() {
 	ControllerButton buttonRB(ControllerDigital::R1);
 	ControllerButton buttonRT(ControllerDigital::R2);
 
+	int goalHeight = 0;
+
 	while(true) {
 
 		// arcade drive controls
@@ -111,10 +122,10 @@ void opcontrol() {
 						 	  master.getAnalog(ControllerAnalog::rightY));
 
 		// controls
-		if(buttonLB.isPressed()) {
+		if(buttonLT.isPressed()) {
 			intake::intakeIn(12000);
 		}
-		else if(buttonRB.isPressed()) {
+		else if(buttonRT.isPressed()) {
 			intake::intakeOut(12000);
 		}
 		else {
@@ -130,9 +141,29 @@ void opcontrol() {
 		else {
 			wrist::stopWrist();
 		}
+		
+		if (buttonX.changedToPressed() && goalHeight < numHeights - 1) {
+			goalHeight++;
+			wrist::wristToPosition(height[goalHeight]);
+		}
+		else if (buttonY.changedToPressed() && goalHeight > 0) {
+			goalHeight--;
+			wrist::wristToPosition(height[goalHeight]);
+		}
+
+		if (buttonLB.isPressed()) {
+			pusher::pusherForward(4000);
+		}
+		else if (buttonRB.isPressed()) {
+			pusher::pusherBackward(4000);
+		}
+		else {
+			pusher::stopPusher();
+		}
+
 
 		// wait and give unnecessary time to other tasks
 		// motor telemetry, joystick values, etc. update every 10ms
-		pros::delay(10);
+		pros::delay(20);
 	}
 }

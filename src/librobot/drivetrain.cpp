@@ -29,7 +29,7 @@ namespace drivetrain {
 	 */
 	void arcadeDrive(double throttle, double rotation) {
 		drive->setMaxVelocity(200);
-		drive->getModel()->arcade(pow(throttle, 3), pow(rotation, 3));
+		drive->getModel()->arcade(throttle, rotation);
 	}
 
 	/** tank drive control:
@@ -37,7 +37,7 @@ namespace drivetrain {
 	 *  right joystick controls right side
 	 */
 	void tankDrive(double left, double right) {
-		drive->getModel()->tank(pow(left, 3), pow(right, 3));
+		drive->getModel()->tank(left, right);
 	}
 
 	/**

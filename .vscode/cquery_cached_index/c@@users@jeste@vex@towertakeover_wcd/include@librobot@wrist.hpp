@@ -7,7 +7,7 @@ namespace wrist {
     void init();
     void wristUp(double power);
     void wristDown(double power);
-    void wristToPosition(double position, double velocity);
+    void wristToPosition(double target);
     void waitUntilFinished();
     void stopWrist();
 }

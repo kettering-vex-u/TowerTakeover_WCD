@@ -13,7 +13,7 @@ namespace auton {
     void autonLeft() {
 
         // pop the tray and intake out
-        wrist::wristToPosition(1.0, 1.0);
+        wrist::wristToPosition(0);
         intake::intakeOut(6000);
         wrist::waitUntilFinished();
 
@@ -30,9 +30,9 @@ namespace auton {
     }
 
     void autonRight() {
-        
+
         // pop the tray and intake out
-        wrist::wristToPosition(1.0, 1.0);
+        wrist::wristToPosition(0);
         intake::intakeOut(6000);
         wrist::waitUntilFinished();
 
