@@ -48,7 +48,7 @@ namespace wrist {
 
     void stopWrist() {
         wristL.moveVoltage(1750);
-        wristR.moveVoltage(4000);
+        wristR.moveVoltage(-1750);
     }
 
 }
